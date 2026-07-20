@@ -12,3 +12,9 @@ login_manager.login_message_category = "warning"
 
 # Database Migrations
 migrate = Migrate()
+from models import User
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))

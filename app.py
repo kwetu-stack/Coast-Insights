@@ -1,7 +1,9 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 from config import Config
 from extensions import db, login_manager, migrate
+from models import User
+from blueprints.auth import auth_bp
 
 
 def create_app():
@@ -15,19 +17,19 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    # Temporary Home Route
+    # Register blueprints
+    app.register_blueprint(auth_bp)
+
+    # Home Route
     @app.route("/")
     def home():
-        return """
-        <h1>Coast Insights™</h1>
-        <h3>Executive Sales Intelligence & Decision Support System</h3>
-        <p>Checkpoint 3: Flask Foundation Running ✅</p>
-        """
+        return redirect(url_for("auth.login"))
 
     return app
 
 
 app = create_app()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
