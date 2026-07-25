@@ -15,6 +15,7 @@
     </title>
 
     <!-- Google Font -->
+
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
@@ -26,6 +27,7 @@
           rel="stylesheet">
 
     <!-- Kwetu Theme -->
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/kwetu-theme.css') }}">
 
@@ -36,77 +38,117 @@
 
 <body>
 
-    <!-- ==========================
-         NAVIGATION
-    =========================== -->
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <div class="brand">
+    <div class="brand">
 
-            Coast Insights™
+        Coast Insights™
 
-        </div>
+        <small>
+            Executive Decision Support System
+        </small>
 
-        <div>
+    </div>
 
-            {% if current_user.is_authenticated %}
+    <div class="nav-links">
 
-                Welcome,
-                {{ current_user.display_name }}
+        {% if current_user.is_authenticated %}
 
-            {% else %}
+            <a href="{{ url_for('dashboard.dashboard') }}">
+                Dashboard
+            </a>
 
+            <a href="{{ url_for('trade_visits.index') }}">
+                Trade Visits
+            </a>
+
+            <a href="{{ url_for('sales.index') }}">
+                Sales Intelligence
+            </a>
+
+            <a href="{{ url_for('auth.logout') }}">
+                Logout
+            </a>
+
+        {% else %}
+
+            <span class="nav-tagline">
                 Executive Sales Intelligence
+            </span>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ======================================================
+     MAIN CONTENT
+====================================================== -->
+
+<main>
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="card"
+                         style="margin-bottom:20px;">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
 
             {% endif %}
 
-        </div>
+        {% endwith %}
 
-    </nav>
+        {% block content %}
+        {% endblock %}
 
-    <!-- ==========================
-         MAIN CONTENT
-    =========================== -->
+    </div>
 
-    <main>
+</main>
 
-        <div class="container">
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
+<!-- ======================================================
+     FOOTER
+====================================================== -->
 
-                {% if messages %}
+<footer class="footer">
 
-                    {% for category, message in messages %}
+    <div class="footer-content">
 
-                        <div class="card"
-                             style="margin-bottom:20px;">
+        <span>
 
-                            {{ message }}
+            Coast Insights™ Executive Decision Support System
 
-                        </div>
+        </span>
 
-                    {% endfor %}
+        <span>
 
-                {% endif %}
+            Powered by Harun Bundi Murithi
 
-            {% endwith %}
+        </span>
 
-            {% block content %}
-            {% endblock %}
+    </div>
 
-        </div>
+</footer>
 
-    </main>
 
-    <!-- ==========================
-         FOOTER
-    =========================== -->
-
-   
-
-    {% block scripts %}
-    {% endblock %}
+{% block scripts %}
+{% endblock %}
 
 </body>
 

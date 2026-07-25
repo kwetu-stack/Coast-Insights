@@ -1,0 +1,559 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Trade Visit | Coast Insights™
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1 class="page-title">
+
+        Edit Trade Visit
+
+    </h1>
+
+    <p class="page-subtitle">
+
+        Update outlet information, market intelligence and business opportunities.
+
+    </p>
+
+    <hr class="page-divider">
+
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
+    <div>
+
+        <h3 class="card-title mb-1">
+
+            Update Field Intelligence
+
+        </h3>
+
+        <p class="card-subtitle mb-0">
+
+            Modify the recorded information before saving your changes.
+
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('trade_visits.view', id=visit.id) }}"
+       class="btn btn-outline-primary">
+
+        Back to Report
+
+    </a>
+
+</div>
+
+
+<form method="POST">
+
+
+<!-- ======================================================
+     OUTLET INFORMATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Outlet Information
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Outlet Name
+
+            </label>
+
+            <input
+                type="text"
+                name="outlet_name"
+                class="form-control"
+                value="{{ visit.outlet_name }}">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Location
+
+            </label>
+
+            <input
+                type="text"
+                name="location"
+                class="form-control"
+                value="{{ visit.location }}">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Contact Person
+
+            </label>
+
+            <input
+                type="text"
+                name="contact_person"
+                class="form-control"
+                value="{{ visit.contact_person }}">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Phone Number
+
+            </label>
+
+            <input
+                type="text"
+                name="phone_number"
+                class="form-control"
+                value="{{ visit.phone_number }}">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Outlet Type
+
+            </label>
+
+            <select
+                name="outlet_type"
+                class="form-select">
+
+                <option>{{ visit.outlet_type }}</option>
+
+                <option>HORECA</option>
+                <option>Retail</option>
+                <option>Supermarket</option>
+                <option>Institution</option>
+                <option>Distributor</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     CURRENT BUSINESS STATUS
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Current Business Status
+
+    </h3>
+
+    <div class="mb-3">
+
+        <label>
+
+            Buying Razco Products
+
+        </label>
+
+        <select
+            name="buying_razco"
+            class="form-select">
+
+            <option>{{ visit.buying_razco }}</option>
+
+            <option>Yes</option>
+
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="mb-3">
+
+        <label>
+
+            Products Purchased
+
+        </label>
+
+        <textarea
+            name="products_purchased"
+            class="form-control">{{ visit.products_purchased }}</textarea>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Current Supplier
+
+            </label>
+
+            <input
+                type="text"
+                name="current_supplier"
+                class="form-control"
+                value="{{ visit.current_supplier }}">
+
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Restocking Frequency
+
+            </label>
+
+            <input
+                type="text"
+                name="restocking_frequency"
+                class="form-control"
+                value="{{ visit.restocking_frequency }}">
+
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Average Order Size
+
+            </label>
+
+            <input
+                type="text"
+                name="average_order_size"
+                class="form-control"
+                value="{{ visit.average_order_size }}">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     CUSTOMER CLASSIFICATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Customer Classification
+
+    </h3>
+
+    <div class="mb-3">
+
+        <label>
+
+            Customer Status
+
+        </label>
+
+        <select
+            name="customer_status"
+            class="form-select">
+
+            <option>{{ visit.customer_status }}</option>
+
+            <option>Existing Account</option>
+            <option>Growth Opportunity</option>
+            <option>Lost Account</option>
+            <option>Prospect</option>
+            <option>Potential Customer</option>
+
+        </select>
+
+    </div>
+
+</div>
+<!-- ======================================================
+     COMPETITOR INTELLIGENCE
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Competitor Intelligence
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Competitor Brand
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_brand"
+                class="form-control"
+                value="{{ visit.competitor_brand }}">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Competitor Product
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_product"
+                class="form-control"
+                value="{{ visit.competitor_product }}">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Market Price
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_price"
+                class="form-control"
+                value="{{ visit.competitor_price }}">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Promotion
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_promotion"
+                class="form-control"
+                value="{{ visit.competitor_promotion }}">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Equipment
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_equipment"
+                class="form-control"
+                value="{{ visit.competitor_equipment }}">
+
+        </div>
+
+        <div class="col-12 mb-3">
+
+            <label>
+
+                Display Observation
+
+            </label>
+
+            <textarea
+                name="display_observation"
+                class="form-control">{{ visit.display_observation }}</textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     OPPORTUNITY & FOLLOW-UP
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Opportunity & Follow-up
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Opportunity Type
+
+            </label>
+
+            <select
+                name="opportunity_type"
+                class="form-select">
+
+                <option>{{ visit.opportunity_type }}</option>
+
+                <option>New Customer</option>
+                <option>Growth Opportunity</option>
+                <option>Lost Account Recovery</option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Estimated Potential
+
+            </label>
+
+            <input
+                type="text"
+                name="estimated_potential"
+                class="form-control"
+                value="{{ visit.estimated_potential }}">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Next Action
+
+            </label>
+
+            <input
+                type="text"
+                name="next_action"
+                class="form-control"
+                value="{{ visit.next_action }}">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Follow-up Date
+
+            </label>
+
+            <input
+                type="date"
+                name="follow_up_date"
+                class="form-control"
+                value="{{ visit.follow_up_date }}">
+
+        </div>
+
+        <div class="col-12 mb-3">
+
+            <label>
+
+                Executive Notes
+
+            </label>
+
+            <textarea
+                name="notes"
+                class="form-control">{{ visit.notes }}</textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     ACTIONS
+====================================================== -->
+
+<div class="d-flex justify-content-between mt-4 flex-wrap">
+
+    <a href="{{ url_for('trade_visits.view', id=visit.id) }}"
+       class="btn btn-outline-secondary">
+
+        Cancel
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        Update Trade Visit
+
+    </button>
+
+</div>
+
+</form>
+
+{% endblock %}

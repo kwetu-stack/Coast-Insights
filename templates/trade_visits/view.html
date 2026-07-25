@@ -1,0 +1,569 @@
+{% extends "base.html" %}
+
+{% block title %}
+Trade Visit Details | Coast Insights™
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1 class="page-title">
+
+        {{ visit.outlet_name }}
+
+    </h1>
+
+    <p class="page-subtitle">
+
+        Executive Trade Visit Intelligence Report
+
+    </p>
+
+    <hr class="page-divider">
+
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
+    <div>
+
+        <h3 class="card-title mb-1">
+
+            Field Intelligence Summary
+
+        </h3>
+
+        <p class="card-subtitle mb-0">
+
+            Complete outlet assessment captured during the trade visit.
+
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('trade_visits.index') }}"
+       class="btn btn-outline-primary">
+
+        Back to Trade Visits
+
+    </a>
+
+</div>
+
+
+
+<!-- ======================================================
+     OUTLET INFORMATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Outlet Information
+
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+
+            <tr>
+
+                <th width="30%">
+                    Visit Date
+                </th>
+
+                <td>
+
+                    {{ visit.visit_date }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Sales Officer
+                </th>
+
+                <td>
+
+                    {{ visit.sales_officer }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Outlet Name
+                </th>
+
+                <td>
+
+                    <strong>{{ visit.outlet_name }}</strong>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Location
+                </th>
+
+                <td>
+
+                    {{ visit.location }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Contact Person
+                </th>
+
+                <td>
+
+                    {{ visit.contact_person }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Phone Number
+                </th>
+
+                <td>
+
+                    {{ visit.phone_number }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Outlet Type
+                </th>
+
+                <td>
+
+                    {{ visit.outlet_type }}
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+<!-- ======================================================
+     BUSINESS STATUS
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Current Business Status
+
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+
+            <tr>
+
+                <th width="30%">
+                    Buying Razco
+                </th>
+
+                <td>
+
+                    {{ visit.buying_razco }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Products Purchased
+                </th>
+
+                <td>
+
+                    {{ visit.products_purchased }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Current Supplier
+                </th>
+
+                <td>
+
+                    {{ visit.current_supplier }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Restocking Frequency
+                </th>
+
+                <td>
+
+                    {{ visit.restocking_frequency }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Average Order Size
+                </th>
+
+                <td>
+
+                    {{ visit.average_order_size }}
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+<!-- ======================================================
+     CUSTOMER CLASSIFICATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Customer Classification
+
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+
+            <tr>
+
+                <th width="30%">
+                    Classification
+                </th>
+
+                <td>
+
+                    <strong>{{ visit.customer_status }}</strong>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- ======================================================
+     COMPETITOR INTELLIGENCE
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Competitor Intelligence
+
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+
+            <tr>
+
+                <th width="30%">
+                    Competitor Brand
+                </th>
+
+                <td>
+
+                    {{ visit.competitor_brand }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Competitor Product
+                </th>
+
+                <td>
+
+                    {{ visit.competitor_product }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Competitor Price
+                </th>
+
+                <td>
+
+                    {{ visit.competitor_price }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Promotion Activity
+                </th>
+
+                <td>
+
+                    {{ visit.competitor_promotion }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Equipment Observed
+                </th>
+
+                <td>
+
+                    {{ visit.competitor_equipment }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Display Observation
+                </th>
+
+                <td>
+
+                    {{ visit.display_observation }}
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+<!-- ======================================================
+     OPPORTUNITY & FOLLOW-UP
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Opportunity & Follow-up
+
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+
+            <tr>
+
+                <th width="30%">
+                    Opportunity Type
+                </th>
+
+                <td>
+
+                    {{ visit.opportunity_type }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Estimated Potential
+                </th>
+
+                <td>
+
+                    {{ visit.estimated_potential }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Next Action
+                </th>
+
+                <td>
+
+                    {{ visit.next_action }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+                    Follow-up Date
+                </th>
+
+                <td>
+
+                    {{ visit.follow_up_date }}
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+<!-- ======================================================
+     EXECUTIVE NOTES
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Executive Notes
+
+    </h3>
+
+    {% if visit.notes %}
+
+        <p style="white-space:pre-line;">
+
+            {{ visit.notes }}
+
+        </p>
+
+    {% else %}
+
+        <p class="text-muted">
+
+            No additional notes were recorded during this trade visit.
+
+        </p>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- ======================================================
+     ACTIONS
+====================================================== -->
+
+<div class="d-flex justify-content-between mt-4 flex-wrap">
+
+    <a href="{{ url_for('trade_visits.index') }}"
+       class="btn btn-outline-primary">
+
+        Back to Trade Visits
+
+    </a>
+
+    {% if current_user.is_admin %}
+
+    <div>
+
+        <a href="{{ url_for('trade_visits.edit', id=visit.id) }}"
+           class="btn btn-outline-secondary">
+
+            Edit Visit
+
+        </a>
+
+        <a href="{{ url_for('trade_visits.delete', id=visit.id) }}"
+           class="btn btn-outline-danger"
+           onclick="return confirm('Delete this trade visit?');">
+
+            Delete Visit
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,594 @@
+{% extends "base.html" %}
+
+{% block title %}
+New Trade Visit | Coast Insights™
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1 class="page-title">
+
+        New Trade Visit
+
+    </h1>
+
+    <p class="page-subtitle">
+
+        Capture outlet information, market intelligence and business opportunities from the field.
+
+    </p>
+
+    <hr class="page-divider">
+
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
+    <div>
+
+        <h3 class="card-title mb-1">
+
+            Field Data Capture
+
+        </h3>
+
+        <p class="card-subtitle mb-0">
+
+            Complete all sections before saving the trade visit.
+
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('trade_visits.index') }}"
+       class="btn btn-outline-primary">
+
+        Back to Trade Visits
+
+    </a>
+
+</div>
+
+
+<form method="POST">
+
+
+<!-- ======================================================
+     VISIT INFORMATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Visit Information
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Visit Date
+
+            </label>
+
+            <input
+                type="date"
+                name="visit_date"
+                class="form-control"
+                required>
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Sales Officer
+
+            </label>
+
+            <input
+                type="text"
+                name="sales_officer"
+                class="form-control"
+                placeholder="Logged in user">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     OUTLET INFORMATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Outlet Information
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Outlet Name
+
+            </label>
+
+            <input
+                type="text"
+                name="outlet_name"
+                class="form-control"
+                required>
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Location
+
+            </label>
+
+            <input
+                type="text"
+                name="location"
+                class="form-control"
+                required>
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Contact Person
+
+            </label>
+
+            <input
+                type="text"
+                name="contact_person"
+                class="form-control">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Phone Number
+
+            </label>
+
+            <input
+                type="text"
+                name="phone_number"
+                class="form-control">
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Outlet Type
+
+            </label>
+
+            <select
+                name="outlet_type"
+                class="form-select">
+
+                <option>HORECA</option>
+                <option>Retail</option>
+                <option>Supermarket</option>
+                <option>Institution</option>
+                <option>Distributor</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     CURRENT BUSINESS STATUS
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Current Business Status
+
+    </h3>
+
+    <div class="mb-3">
+
+        <label>
+
+            Is the outlet buying Razco products?
+
+        </label>
+
+        <select
+            name="buying_razco"
+            class="form-select">
+
+            <option>Yes</option>
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="mb-3">
+
+        <label>
+
+            Products Purchased
+
+        </label>
+
+        <textarea
+            name="products_purchased"
+            class="form-control"></textarea>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Current Supplier
+
+            </label>
+
+            <input
+                type="text"
+                name="current_supplier"
+                class="form-control">
+
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Restocking Frequency
+
+            </label>
+
+            <input
+                type="text"
+                name="restocking_frequency"
+                class="form-control">
+
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Average Order Size
+
+            </label>
+
+            <input
+                type="text"
+                name="average_order_size"
+                class="form-control">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     CUSTOMER CLASSIFICATION
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Customer Classification
+
+    </h3>
+
+    <div class="mb-3">
+
+        <label>
+
+            Customer Status
+
+        </label>
+
+        <select
+            name="customer_status"
+            class="form-select">
+
+            <option>Existing Account</option>
+            <option>Growth Opportunity</option>
+            <option>Lost Account</option>
+            <option>Prospect</option>
+            <option>Potential Customer</option>
+
+        </select>
+
+    </div>
+
+</div>
+<!-- ======================================================
+     COMPETITOR INTELLIGENCE
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Competitor Intelligence
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Competitor Brand
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_brand"
+                class="form-control">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Competitor Product
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_product"
+                class="form-control">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Market Price
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_price"
+                class="form-control"
+                placeholder="KES">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Promotion
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_promotion"
+                class="form-control">
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <label>
+
+                Equipment
+
+            </label>
+
+            <input
+                type="text"
+                name="competitor_equipment"
+                class="form-control"
+                placeholder="Freezer / Display">
+
+        </div>
+
+        <div class="col-12 mb-3">
+
+            <label>
+
+                Display Observation
+
+            </label>
+
+            <textarea
+                name="display_observation"
+                class="form-control"></textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     OPPORTUNITY & FOLLOW-UP
+====================================================== -->
+
+<div class="card mb-4">
+
+    <h3 class="card-title">
+
+        Opportunity & Follow-up
+
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Opportunity Type
+
+            </label>
+
+            <select
+                name="opportunity_type"
+                class="form-select">
+
+                <option>New Customer</option>
+                <option>Growth Opportunity</option>
+                <option>Lost Account Recovery</option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Estimated Potential
+
+            </label>
+
+            <input
+                type="text"
+                name="estimated_potential"
+                class="form-control"
+                placeholder="KES">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Next Action
+
+            </label>
+
+            <input
+                type="text"
+                name="next_action"
+                class="form-control">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label>
+
+                Follow-up Date
+
+            </label>
+
+            <input
+                type="date"
+                name="follow_up_date"
+                class="form-control">
+
+        </div>
+
+        <div class="col-12 mb-3">
+
+            <label>
+
+                Executive Notes
+
+            </label>
+
+            <textarea
+                name="notes"
+                class="form-control"
+                placeholder="Observations, recommendations, risks and opportunities..."></textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     ACTIONS
+====================================================== -->
+
+<div class="d-flex justify-content-between mt-4 flex-wrap">
+
+    <a href="{{ url_for('trade_visits.index') }}"
+       class="btn btn-outline-primary">
+
+        Cancel
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        Save Trade Visit
+
+    </button>
+
+</div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,538 @@
+{% extends "base.html" %}
+
+{% block title %}
+Coast Insights™ | Executive Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Executive Dashboard
+        </h2>
+
+        <p class="text-muted">
+            Coast Region Executive Decision Support System
+        </p>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- KPI CARDS -->
+    <!-- ====================================================== -->
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Total Sales
+                    </h6>
+
+                    <h3 class="fw-bold text-primary">
+                        KES {{ "{:,.2f}".format(dashboard.total_sales) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Transactions
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        {{ dashboard.transactions }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Customers
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        {{ dashboard.customers }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Average Sale
+                    </h6>
+
+                    <h3 class="fw-bold text-success">
+                        KES {{ "{:,.2f}".format(dashboard.average_sale) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Highest Sale
+                    </h6>
+
+                    <h3 class="fw-bold text-success">
+                        KES {{ "{:,.2f}".format(dashboard.highest_sale) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Lowest Sale
+                    </h6>
+
+                    <h3 class="fw-bold text-danger">
+                        KES {{ "{:,.2f}".format(dashboard.lowest_sale) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- CHARTS -->
+    <!-- ====================================================== -->
+
+    <div class="row mt-5">
+
+        <!-- Daily Sales -->
+
+        <div class="col-lg-8 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Daily Sales Trend
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:350px;">
+
+                        <canvas id="dailySalesChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Sales by Channel -->
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Sales by Channel
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:350px;">
+
+                        <canvas id="channelChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- ====================================================== -->
+    <!-- CUSTOMER ANALYTICS -->
+    <!-- ====================================================== -->
+
+    <div class="row">
+
+        <!-- Top 10 Customers -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Top 10 Customers
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:350px;">
+
+                        <canvas id="topCustomersChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Sales by Location -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Sales by Location
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+    <div style="height:350px;">
+
+        <canvas id="locationChart"></canvas>
+
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- EXECUTIVE INTELLIGENCE -->
+    <!-- ====================================================== -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+                Executive Intelligence
+            </h4>
+
+        </div>
+
+       <!-- ====================================================== -->
+<!-- EXECUTIVE INTELLIGENCE -->
+<!-- ====================================================== -->
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <h4 class="mb-0">
+            Executive Intelligence
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <p class="text-muted">
+            Executive Summary
+        </p>
+
+        <ul class="mb-0">
+
+            {% for item in executive.summary %}
+
+                <li class="mb-2">
+                    {{ item }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{{ super() }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// ======================================================
+// DAILY SALES TREND
+// ======================================================
+
+new Chart(document.getElementById("dailySalesChart"), {
+
+    type: "line",
+
+    data: {
+
+        labels: {{ chart_labels | tojson }},
+
+        datasets: [{
+
+            label: "Daily Sales (KES)",
+
+            data: {{ chart_values | tojson }},
+
+            tension: 0.3,
+
+            fill: false
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                position: "bottom"
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// ======================================================
+// SALES BY CHANNEL
+// ======================================================
+
+new Chart(document.getElementById("channelChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: {{ channel_labels | tojson }},
+
+        datasets: [{
+
+            data: {{ channel_values | tojson }}
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                position: "bottom"
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// ======================================================
+// TOP 10 CUSTOMERS
+// ======================================================
+
+new Chart(document.getElementById("topCustomersChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ top_customer_labels | tojson }},
+
+        datasets: [{
+
+            label: "Sales (KES)",
+
+            data: {{ top_customer_values | tojson }},
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        indexAxis: "y",
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+});
+// ======================================================
+// SALES BY LOCATION
+// ======================================================
+
+new Chart(document.getElementById("locationChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ location_labels | tojson }},
+
+        datasets: [{
+
+            label: "Sales (KES)",
+
+            data: {{ location_values | tojson }},
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        },
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

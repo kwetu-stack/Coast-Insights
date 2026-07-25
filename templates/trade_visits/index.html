@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}
+Coast Insights™ | Trade Visits
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1 class="page-title">
+        Trade Visits
+    </h1>
+
+    <p class="page-subtitle">
+        Capture market intelligence, customer engagement and field opportunities across the Coast Region.
+    </p>
+
+    <hr class="page-divider">
+
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
+    <div>
+
+        <h3 class="card-title mb-1">
+            Recent Trade Visits
+        </h3>
+
+        <p class="card-subtitle mb-0">
+            Latest field activity recorded by the sales team.
+        </p>
+
+    </div>
+
+    {% if current_user.is_admin %}
+
+    <div class="d-flex gap-2 flex-wrap">
+
+        <a href="{{ url_for('trade_visits.export') }}"
+           class="btn btn-outline-primary">
+
+            Export CSV
+
+        </a>
+
+        <a href="{{ url_for('trade_visits.create') }}"
+           class="btn btn-primary">
+
+            New Trade Visit
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<div class="card">
+
+    <div class="table-responsive">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Outlet</th>
+
+                    <th>Location</th>
+
+                    <th>Outlet Type</th>
+
+                    <th>Status</th>
+
+                    <th class="text-center">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for visit in visits %}
+
+                <tr>
+
+                    <td>
+
+                        {{ visit.visit_date.strftime("%d %b %Y") }}
+
+                    </td>
+
+                    <td>
+
+                        <strong>{{ visit.outlet_name }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        {{ visit.location }}
+
+                    </td>
+
+                    <td>
+
+                        {{ visit.outlet_type }}
+
+                    </td>
+
+                    <td>
+
+                        {{ visit.customer_status }}
+
+                    </td>
+
+                    <td class="text-center">
+
+                        <a href="{{ url_for('trade_visits.view', id=visit.id) }}"
+                           class="btn btn-outline-primary btn-sm">
+
+                            View
+
+                        </a>
+
+                        {% if current_user.is_admin %}
+
+                        <a href="{{ url_for('trade_visits.edit', id=visit.id) }}"
+                           class="btn btn-outline-secondary btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <a href="{{ url_for('trade_visits.delete', id=visit.id) }}"
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this trade visit?');">
+
+                            Delete
+
+                        </a>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="6"
+                        class="text-center">
+
+                        No trade visits have been recorded.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
