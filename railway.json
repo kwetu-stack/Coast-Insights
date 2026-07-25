@@ -5,7 +5,7 @@
   },
   "deploy": {
     "preDeployCommand": [
-      "flask db upgrade"
+      "FLASK_APP=app.py flask db upgrade"
     ],
     "startCommand": "gunicorn app:app"
   }
