@@ -54,12 +54,29 @@ Coast Insights™ | Sales Intelligence
 
                         </label>
 
-                        <input
-                            type="text"
-                            name="customer"
-                            class="form-control"
-                            value="{{ customer_search }}"
-                            placeholder="Example: NVS Likoni">
+                        <div class="position-relative">
+
+    <input
+        type="text"
+        id="customerSearch"
+        name="customer"
+        class="form-control"
+        autocomplete="off"
+        value="{{ customer_search }}"
+        placeholder="Start typing customer name...">
+
+    <div
+    id="customerSuggestions"
+    class="list-group position-absolute w-100 shadow bg-white"
+    style="
+        z-index:2000;
+        max-height:250px;
+        overflow-y:auto;
+        border-radius:6px;
+    ">
+</div>
+
+</div>
 
                     </div>
 
@@ -509,5 +526,83 @@ Coast Insights™ | Sales Intelligence
 {% endif %}
 
 </div>
+<script>
 
+const customerInput =
+    document.getElementById("customerSearch");
+
+const suggestionBox =
+    document.getElementById("customerSuggestions");
+
+
+customerInput.addEventListener("input", function () {
+
+    const term = this.value.trim();
+
+    if (term.length < 1) {
+
+        suggestionBox.innerHTML = "";
+
+        return;
+
+    }
+
+    fetch("/sales/autocomplete?term=" + encodeURIComponent(term))
+
+        .then(response => response.json())
+
+        .then(customers => {
+
+            suggestionBox.innerHTML = "";
+
+            customers.forEach(customer => {
+
+                const item = document.createElement("a");
+
+                item.className =
+    "list-group-item list-group-item-action border";
+
+item.style.cursor = "pointer";
+
+item.style.backgroundColor = "white";
+
+item.style.padding = "10px";
+
+item.style.display = "block";
+
+                item.href = "#";
+
+                item.textContent = customer;
+
+                item.onclick = function (e) {
+
+                    e.preventDefault();
+
+                    customerInput.value = customer;
+
+                    suggestionBox.innerHTML = "";
+
+                };
+
+                suggestionBox.appendChild(item);
+
+            });
+
+        });
+
+});
+
+
+document.addEventListener("click", function (e) {
+
+    if (!customerInput.contains(e.target) &&
+        !suggestionBox.contains(e.target)) {
+
+        suggestionBox.innerHTML = "";
+
+    }
+
+});
+
+</script>
 {% endblock %}

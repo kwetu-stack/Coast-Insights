@@ -5,20 +5,41 @@ from flask import (
     request,
     redirect,
     url_for,
-    flash
+    flash,
+    jsonify
 )
-
 from flask_login import (
     login_required,
     current_user
 )
 
-from sqlalchemy import func
+from sqlalchemy import and_, or_
 
 from extensions import db
 from models import Sale
 
 from . import sales_bp
+
+
+def _search_tokens(value):
+    return [
+        token
+        for token in value.split()
+        if token
+    ]
+
+
+def _sale_text_matches(tokens):
+    return and_(
+        *[
+            or_(
+                Sale.customer_name.ilike(f"%{token}%"),
+                Sale.location.ilike(f"%{token}%"),
+                Sale.channel.ilike(f"%{token}%"),
+            )
+            for token in tokens
+        ]
+    )
 
 
 @sales_bp.route("/", methods=["GET", "POST"])
@@ -148,10 +169,10 @@ def index():
 
     if customer_search:
 
+        tokens = _search_tokens(customer_search)
+
         query = query.filter(
-            Sale.customer_name.ilike(
-                f"%{customer_search}%"
-            )
+            _sale_text_matches(tokens)
         )
 
     # --------------------------------------------------
@@ -309,4 +330,69 @@ def index():
         date_from=date_from,
         date_to=date_to,
     )
-    
+    # --------------------------------------------------
+# CUSTOMER AUTOCOMPLETE
+# --------------------------------------------------
+
+@sales_bp.route("/autocomplete")
+@login_required
+def autocomplete():
+
+    term = request.args.get(
+        "term",
+        ""
+    ).strip()
+
+    if not term:
+
+        return jsonify([])
+
+    tokens = _search_tokens(term)
+
+    customers = (
+
+        db.session.query(
+            Sale.customer_name
+        )
+
+        .filter(
+            _sale_text_matches(tokens)
+        )
+
+        .distinct()
+
+        .order_by(
+            Sale.customer_name
+        )
+
+        .limit(50)
+
+        .all()
+
+    )
+
+    suggestions = []
+    seen = set()
+
+    for row in customers:
+
+        customer = " ".join(
+            row[0].split()
+        )
+
+        key = customer.lower()
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        suggestions.append(customer)
+
+        if len(suggestions) == 15:
+            break
+
+    return jsonify(
+
+        suggestions
+
+    )
