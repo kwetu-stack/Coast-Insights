@@ -26,7 +26,26 @@ from . import sales_bp
 def index():
 
     # --------------------------------------------------
-    # ONLY ADMINS CAN CREATE SALES
+    # CUSTOMER SEARCH
+    # --------------------------------------------------
+
+    customer_search = request.args.get(
+        "customer",
+        ""
+    ).strip()
+
+    date_from = request.args.get(
+        "date_from",
+        ""
+    )
+
+    date_to = request.args.get(
+        "date_to",
+        ""
+    )
+
+    # --------------------------------------------------
+    # ADD DAILY SALES
     # --------------------------------------------------
 
     if request.method == "POST":
@@ -43,10 +62,26 @@ def index():
             )
 
         sale_date = request.form.get("sale_date")
-        customer_name = request.form.get("customer_name", "").strip()
-        channel = request.form.get("channel", "").strip()
-        location = request.form.get("location", "").strip()
-        value = request.form.get("value", "0")
+
+        customer_name = request.form.get(
+            "customer_name",
+            ""
+        ).strip()
+
+        channel = request.form.get(
+            "channel",
+            ""
+        ).strip()
+
+        location = request.form.get(
+            "location",
+            ""
+        ).strip()
+
+        value = request.form.get(
+            "value",
+            "0"
+        )
 
         if (
             not sale_date
@@ -90,6 +125,7 @@ def index():
         )
 
         db.session.add(sale)
+
         db.session.commit()
 
         flash(
@@ -102,38 +138,161 @@ def index():
         )
 
     # --------------------------------------------------
-    # SALES LIST
+    # START SALES QUERY
+    # --------------------------------------------------
+
+    query = Sale.query
+        # --------------------------------------------------
+    # CUSTOMER FILTER
+    # --------------------------------------------------
+
+    if customer_search:
+
+        query = query.filter(
+            Sale.customer_name.ilike(
+                f"%{customer_search}%"
+            )
+        )
+
+    # --------------------------------------------------
+    # DATE FILTER
+    # --------------------------------------------------
+
+    if date_from:
+
+        query = query.filter(
+            Sale.sale_date >= datetime.strptime(
+                date_from,
+                "%Y-%m-%d"
+            ).date()
+        )
+
+    if date_to:
+
+        query = query.filter(
+            Sale.sale_date <= datetime.strptime(
+                date_to,
+                "%Y-%m-%d"
+            ).date()
+        )
+
+    # --------------------------------------------------
+    # SALES HISTORY
     # --------------------------------------------------
 
     sales = (
-        Sale.query
-        .order_by(Sale.sale_date.desc())
+        query
+        .order_by(
+            Sale.sale_date.asc()
+        )
         .all()
     )
 
     sales_with_totals = []
 
+    running_total = 0
+
     for sale in sales:
 
-        total = (
-            db.session.query(
-                func.coalesce(
-                    func.sum(Sale.value),
-                    0
-                )
-            )
-            .filter(
-                Sale.customer_name == sale.customer_name,
-                Sale.sale_date <= sale.sale_date
-            )
-            .scalar()
+        running_total += float(
+            sale.value or 0
         )
 
-        sales_with_totals.append(
-            {
-                "sale": sale,
-                "sales_to_date": float(total)
-            }
+        sales_with_totals.append({
+
+            "sale": sale,
+
+            "sales_to_date": running_total
+
+        })
+
+    # --------------------------------------------------
+    # CUSTOMER SUMMARY
+    # --------------------------------------------------
+
+    summary = None
+
+    if sales:
+
+        total_sales = sum(
+            s.value for s in sales
+        )
+
+        average_sale = (
+            total_sales / len(sales)
+        )
+
+        summary = {
+
+            "customer": sales[0].customer_name,
+
+            "channel": sales[0].channel,
+
+            "location": sales[0].location,
+
+            "transactions": len(sales),
+
+            "total_sales": float(total_sales),
+
+            "average_sale": float(average_sale)
+
+        }
+            # --------------------------------------------------
+    # CUSTOMER PROFILE
+    # --------------------------------------------------
+
+    profile = None
+
+    if summary:
+
+        total = summary["total_sales"]
+
+        if total >= 500000:
+
+            profile = "Platinum"
+
+        elif total >= 250000:
+
+            profile = "Gold"
+
+        elif total >= 100000:
+
+            profile = "Silver"
+
+        else:
+
+            profile = "Bronze"
+
+    # --------------------------------------------------
+    # AI RECOMMENDATION
+    # --------------------------------------------------
+
+    recommendation = None
+
+    if profile == "Platinum":
+
+        recommendation = (
+            "Protect this customer. Increase management engagement "
+            "and maintain weekly visits."
+        )
+
+    elif profile == "Gold":
+
+        recommendation = (
+            "Strong growth opportunity. Focus on range expansion "
+            "and increased visit frequency."
+        )
+
+    elif profile == "Silver":
+
+        recommendation = (
+            "Increase product penetration and convert to a Gold account."
+        )
+
+    elif profile == "Bronze":
+
+        recommendation = (
+            "Review sales potential and increase prospecting activity."
         )
 
     # --------------------------------------------------
@@ -142,5 +301,12 @@ def index():
 
     return render_template(
         "sales/index.html",
-        sales=sales_with_totals
+        sales=sales_with_totals,
+        summary=summary,
+        profile=profile,
+        recommendation=recommendation,
+        customer_search=customer_search,
+        date_from=date_from,
+        date_to=date_to,
     )
+    

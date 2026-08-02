@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}
+Coast Insights™ | Weekly Summary
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Weekly Executive Summary
+        </h2>
+
+        <p class="text-muted">
+            Weekly management review for Coast Region.
+        </p>
+
+    </div>
+
+    <form method="POST">
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+
+                <h5 class="mb-0">
+                    Reporting Week
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Week Commencing
+                        </label>
+
+                        <input
+                            type="date"
+                            name="week_commencing"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+                            1. Weekly Route Plan
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <textarea
+                            name="route_plan"
+                            class="form-control"
+                            rows="10"
+                            placeholder="Monday to Saturday route plan..."
+                            required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+                            2. Accounts Opened / Onboarded
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <textarea
+                            name="accounts_opened"
+                            class="form-control"
+                            rows="10"
+                            placeholder="New accounts opened this week..."
+                            required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+                <div class="row">
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+                            3. Prospecting Clients
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <textarea
+                            name="prospects"
+                            class="form-control"
+                            rows="10"
+                            placeholder="Prospective customers currently under engagement..."
+                            required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+                            4. Weekly Trade Visits
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <textarea
+                            name="trade_visits"
+                            class="form-control"
+                            rows="10"
+                            placeholder="Summary of trade visits completed during the week..."
+                            required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-end mb-4">
+
+            <button
+                type="submit"
+                class="btn btn-success btn-lg">
+
+                Save Weekly Summary
+
+            </button>
+
+        </div>
+
+    </form>
+        <!-- ============================================= -->
+    <!-- WEEKLY HISTORY -->
+    <!-- ============================================= -->
+
+    <div class="card shadow-sm border-0 mt-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Weekly History
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if summaries %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Week Commencing</th>
+                            <th>Recorded On</th>
+                            <th class="text-center">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for summary in summaries %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ summary.week_commencing.strftime("%d %b %Y") }}
+
+                            </td>
+
+                            <td>
+
+                                {% if summary.created_at %}
+
+                                    {{ summary.created_at.strftime("%d %b %Y %H:%M") }}
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <a
+                                    href="{{ url_for('weekly_summary.view', summary_id=summary.id) }}"
+                                    class="btn btn-sm btn-primary">
+
+                                    View Report
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="alert alert-info mb-0">
+
+                No weekly summaries have been recorded yet.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

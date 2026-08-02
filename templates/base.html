@@ -67,12 +67,16 @@
             </a>
 
             <a href="{{ url_for('sales.index') }}">
-                Sales Intelligence
-            </a>
+    Sales Intelligence
+</a>
 
-            <a href="{{ url_for('auth.logout') }}">
-                Logout
-            </a>
+<a href="{{ url_for('weekly_summary.index') }}">
+    Weekly Summary
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+    Logout
+</a>
 
         {% else %}
 

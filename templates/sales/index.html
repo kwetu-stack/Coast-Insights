@@ -6,205 +6,507 @@ Coast Insights™ | Sales Intelligence
 
 {% block content %}
 
-<div class="page-header">
+<div class="container-fluid mt-4">
 
-    <h1 class="page-title">
-        Sales Intelligence
-    </h1>
+    <div class="mb-4">
 
-    <p class="page-subtitle">
-        Capture daily outlet sales and monitor cumulative performance across the Coast Region.
-    </p>
+        <h2 class="fw-bold">
 
-    <hr class="page-divider">
+            Sales Intelligence
 
-</div>
+        </h2>
 
+        <p class="text-muted">
 
-<!-- ======================================================
-     SALES ENTRY (ADMIN ONLY)
-====================================================== -->
+            Search any customer and review sales performance before planning a field visit.
 
-{% if current_user.role == "admin" %}
+        </p>
 
-<div class="card mb-4">
+    </div>
 
-    <h3 class="card-title">
-        Add Daily Outlet Sales
-    </h3>
+    <!-- ================================================= -->
+    <!-- CUSTOMER SEARCH -->
+    <!-- ================================================= -->
 
-    <p class="card-subtitle">
-        Record daily sales for each outlet. Sales-to-date is calculated automatically.
-    </p>
+    <div class="card shadow-sm border-0 mb-4">
 
-    <form method="POST">
+        <div class="card-header bg-white">
 
-        <div class="row">
+            <h5 class="mb-0">
 
-            <div class="col-md-3 mb-3">
+                Customer Search
 
-                <label>Date</label>
+            </h5>
 
-                <input
-                    type="date"
-                    name="sale_date"
-                    class="form-control"
-                    required>
+        </div>
 
-            </div>
+        <div class="card-body">
 
-            <div class="col-md-3 mb-3">
+            <form method="GET">
 
-                <label>Customer Name</label>
+                <div class="row">
 
-                <input
-                    type="text"
-                    name="customer_name"
-                    class="form-control"
-                    placeholder="Outlet name"
-                    required>
+                    <div class="col-md-4 mb-3">
 
-            </div>
+                        <label class="form-label">
 
-            <div class="col-md-3 mb-3">
+                            Customer
 
-                <label>Channel</label>
+                        </label>
 
-                <input
-                    type="text"
-                    name="channel"
-                    class="form-control"
-                    placeholder="Sales channel"
-                    required>
+                        <input
+                            type="text"
+                            name="customer"
+                            class="form-control"
+                            value="{{ customer_search }}"
+                            placeholder="Example: NVS Likoni">
 
-            </div>
+                    </div>
 
-            <div class="col-md-3 mb-3">
+                    <div class="col-md-3 mb-3">
 
-                <label>Location</label>
+                        <label class="form-label">
 
-                <input
-                    type="text"
-                    name="location"
-                    class="form-control"
-                    placeholder="Outlet location"
-                    required>
+                            From
 
-            </div>
+                        </label>
 
-            <div class="col-md-3 mb-3">
+                        <input
+                            type="date"
+                            name="date_from"
+                            class="form-control"
+                            value="{{ date_from }}">
 
-                <label>Sales Value (KES)</label>
+                    </div>
 
-                <input
-                    type="number"
-                    step="0.01"
-                    name="value"
-                    class="form-control"
-                    placeholder="0.00"
-                    required>
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+
+                            To
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date_to"
+                            class="form-control"
+                            value="{{ date_to }}">
+
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+
+                        <label>&nbsp;</label>
+
+                        <button
+                            class="btn btn-primary">
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+        <!-- =====================================================
+         CUSTOMER SUMMARY
+    ====================================================== -->
+
+    {% if summary %}
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+
+                Customer Summary
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>Customer</strong><br>
+
+                    {{ summary.customer }}
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>Channel</strong><br>
+
+                    {{ summary.channel }}
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>Location</strong><br>
+
+                    {{ summary.location }}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <strong>Total Sales</strong><br>
+
+                    KES {{ "{:,.2f}".format(summary.total_sales) }}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <strong>Transactions</strong><br>
+
+                    {{ summary.transactions }}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <strong>Average Sale</strong><br>
+
+                    KES {{ "{:,.2f}".format(summary.average_sale) }}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <strong>Customer Profile</strong><br>
+
+                    {% if profile == "Platinum" %}
+
+                        <span class="badge bg-success">
+
+                            {{ profile }}
+
+                        </span>
+
+                    {% elif profile == "Gold" %}
+
+                        <span class="badge bg-warning text-dark">
+
+                            {{ profile }}
+
+                        </span>
+
+                    {% elif profile == "Silver" %}
+
+                        <span class="badge bg-secondary">
+
+                            {{ profile }}
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-dark">
+
+                            {{ profile }}
+
+                        </span>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
         </div>
 
-        <button
-            type="submit"
-            class="btn btn-primary">
+    </div>
 
-            Save Daily Sale
+    {% endif %}
+        <!-- =====================================================
+         AI RECOMMENDATION
+    ====================================================== -->
 
-        </button>
+    {% if recommendation %}
 
-    </form>
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+
+                AI Recommendation
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-info mb-0">
+
+                {{ recommendation }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <!-- =====================================================
+         DAILY SALES HISTORY
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+
+                Daily Sales History
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>Customer</th>
+
+                            <th>Channel</th>
+
+                            <th>Location</th>
+
+                            <th class="text-end">
+
+                                Daily Sales
+
+                            </th>
+
+                            <th class="text-end">
+
+                                Running Total
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in sales %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ item.sale.sale_date }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.sale.customer_name }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.sale.channel }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.sale.location }}
+
+                            </td>
+
+                            <td class="text-end">
+
+                                {{ "{:,.2f}".format(item.sale.value) }}
+
+                            </td>
+
+                            <td class="text-end">
+
+                                <strong>
+
+                                    {{ "{:,.2f}".format(item.sales_to_date) }}
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="6" class="text-center">
+
+                                No matching sales found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ======================================================
+     DAILY SALES ENTRY (ADMIN ONLY)
+====================================================== -->
+
+{% if current_user.role == "admin" %}
+
+<div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            Add Daily Outlet Sales
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        name="sale_date"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Customer Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="customer_name"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <label class="form-label">
+
+                        Channel
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="channel"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <label class="form-label">
+
+                        Location
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <label class="form-label">
+
+                        Sales (KES)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="value"
+                        class="form-control"
+                        required>
+
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Save Daily Sale
+
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 
 {% endif %}
-
-
-<!-- ======================================================
-     SALES RECORDS
-====================================================== -->
-
-<div class="card">
-
-    <h3 class="card-title">
-        Outlet Sales Records
-    </h3>
-
-    <p class="card-subtitle">
-        Historical sales entered by the sales team.
-    </p>
-
-    <div class="table-responsive">
-
-        <table class="table">
-
-            <thead>
-
-                <tr>
-
-                    <th>Date</th>
-                    <th>Customer</th>
-                    <th>Channel</th>
-                    <th>Location</th>
-
-                    <th class="text-right">
-                        Today's Sales (KES)
-                    </th>
-
-                    <th class="text-right">
-                        Sales To Date (KES)
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for item in sales %}
-
-                <tr>
-
-                    <td>{{ item.sale.sale_date }}</td>
-
-                    <td>{{ item.sale.customer_name }}</td>
-
-                    <td>{{ item.sale.channel }}</td>
-
-                    <td>{{ item.sale.location }}</td>
-
-                    <td class="text-right">
-                        {{ "{:,.2f}".format(item.sale.value) }}
-                    </td>
-
-                    <td class="text-right">
-                        <strong>
-                            {{ "{:,.2f}".format(item.sales_to_date) }}
-                        </strong>
-                    </td>
-
-                </tr>
-
-                {% else %}
-
-                <tr>
-
-                    <td colspan="6" class="text-center">
-                        No sales records available.
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
 
 </div>
 

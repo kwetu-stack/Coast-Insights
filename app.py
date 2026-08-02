@@ -7,6 +7,7 @@ from blueprints.auth import auth_bp
 from blueprints.dashboard import dashboard_bp
 from blueprints.sales import sales_bp
 from blueprints.trade_visits import trade_visits_bp
+from blueprints.weekly_summary import weekly_summary_bp
 
 
 def create_app():
@@ -25,6 +26,8 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(sales_bp)
     app.register_blueprint(trade_visits_bp)
+  
+    app.register_blueprint(weekly_summary_bp)
 
     # Home Route
     @app.route("/")

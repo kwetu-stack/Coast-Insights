@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}
+Weekly Executive Report
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <h2 class="mb-3">
+
+                Weekly Executive Summary
+
+            </h2>
+
+            <hr>
+
+            <p>
+
+                <strong>Week Commencing:</strong>
+
+                {{ summary.week_commencing.strftime("%d %B %Y") }}
+
+            </p>
+
+            
+
+            <h4>
+
+                1. Weekly Route Plan
+
+            </h4>
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+
+                    {{ summary.route_plan|replace('\n','<br>')|safe }}
+
+                </div>
+
+            </div>
+
+            <h4>
+
+                2. Accounts Opened
+
+            </h4>
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+
+                    {{ summary.accounts_opened|replace('\n','<br>')|safe }}
+
+                </div>
+
+            </div>
+
+            <h4>
+
+                3. Prospecting Clients
+
+            </h4>
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+
+                    {{ summary.prospects|replace('\n','<br>')|safe }}
+
+                </div>
+
+            </div>
+
+            <h4>
+
+                4. Weekly Trade Visits
+
+            </h4>
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+
+                    {{ summary.trade_visits|replace('\n','<br>')|safe }}
+
+                </div>
+
+            </div>
+
+            <div class="text-end">
+
+                <a
+                    href="{{ url_for('weekly_summary.index') }}"
+                    class="btn btn-secondary">
+
+                    Back
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

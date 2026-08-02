@@ -8,26 +8,33 @@ Coast Insights™ | Executive Dashboard
 
 <div class="container-fluid mt-4">
 
-    <!-- Header -->
-    <div class="mb-4">
+    <!-- ===================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================================== -->
 
-        <h2 class="fw-bold">
-            Executive Dashboard
-        </h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <p class="text-muted">
-            Coast Region Executive Decision Support System
-        </p>
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Executive Dashboard
+            </h2>
+
+            <p class="text-muted mb-0">
+                Coast Region Executive Decision Support System
+            </p>
+
+        </div>
 
     </div>
 
-    <!-- ====================================================== -->
-    <!-- KPI CARDS -->
-    <!-- ====================================================== -->
+    <!-- ===================================================== -->
+    <!-- EXECUTIVE KPI CARDS -->
+    <!-- ===================================================== -->
 
     <div class="row g-4">
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-xl-2">
 
             <div class="card shadow-sm border-0 h-100">
 
@@ -38,7 +45,9 @@ Coast Insights™ | Executive Dashboard
                     </h6>
 
                     <h3 class="fw-bold text-primary">
-                        KES {{ "{:,.2f}".format(dashboard.total_sales) }}
+
+                        KES {{ "{:,.0f}".format(dashboard.total_sales) }}
+
                     </h3>
 
                 </div>
@@ -47,18 +56,22 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-xl-2">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-body text-center">
 
                     <h6 class="text-muted">
+
                         Transactions
+
                     </h6>
 
                     <h3 class="fw-bold">
+
                         {{ dashboard.transactions }}
+
                     </h3>
 
                 </div>
@@ -67,18 +80,46 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-xl-2">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-body text-center">
 
                     <h6 class="text-muted">
+
                         Customers
+
+                    </h6>
+
+                    <h3 class="fw-bold text-success">
+
+                        {{ dashboard.customers }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-xl-2">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+
+                        Average Sale
+
                     </h6>
 
                     <h3 class="fw-bold">
-                        {{ dashboard.customers }}
+
+                        KES {{ "{:,.0f}".format(dashboard.average_sale) }}
+
                     </h3>
 
                 </div>
@@ -87,38 +128,22 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-xl-2">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-body text-center">
 
                     <h6 class="text-muted">
-                        Average Sale
-                    </h6>
 
-                    <h3 class="fw-bold text-success">
-                        KES {{ "{:,.2f}".format(dashboard.average_sale) }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="card shadow-sm border-0 h-100">
-
-                <div class="card-body text-center">
-
-                    <h6 class="text-muted">
                         Highest Sale
+
                     </h6>
 
                     <h3 class="fw-bold text-success">
-                        KES {{ "{:,.2f}".format(dashboard.highest_sale) }}
+
+                        KES {{ "{:,.0f}".format(dashboard.highest_sale) }}
+
                     </h3>
 
                 </div>
@@ -127,18 +152,22 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-xl-2">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-body text-center">
 
                     <h6 class="text-muted">
+
                         Lowest Sale
+
                     </h6>
 
                     <h3 class="fw-bold text-danger">
-                        KES {{ "{:,.2f}".format(dashboard.lowest_sale) }}
+
+                        KES {{ "{:,.0f}".format(dashboard.lowest_sale) }}
+
                     </h3>
 
                 </div>
@@ -149,33 +178,29 @@ Coast Insights™ | Executive Dashboard
 
     </div>
 
-    <!-- ====================================================== -->
-    <!-- CHARTS -->
-    <!-- ====================================================== -->
+    <!-- ===================================================== -->
+    <!-- DAILY SALES & CHANNEL ANALYSIS -->
+    <!-- ===================================================== -->
 
-    <div class="row mt-5">
+    <div class="row mt-4">
 
-        <!-- Daily Sales -->
-
-        <div class="col-lg-8 mb-4">
+        <div class="col-lg-8">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-header bg-white">
 
                     <h5 class="mb-0">
+
                         Daily Sales Trend
+
                     </h5>
 
                 </div>
 
                 <div class="card-body">
 
-                    <div style="height:350px;">
-
-                        <canvas id="dailySalesChart"></canvas>
-
-                    </div>
+                    <canvas id="dailySalesChart" height="120"></canvas>
 
                 </div>
 
@@ -183,25 +208,110 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <!-- Sales by Channel -->
-
-        <div class="col-lg-4 mb-4">
+        <div class="col-lg-4">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-header bg-white">
 
                     <h5 class="mb-0">
+
                         Sales by Channel
+
                     </h5>
 
                 </div>
 
                 <div class="card-body">
 
-                    <div style="height:350px;">
+                    <canvas id="channelChart"></canvas>
 
-                        <canvas id="channelChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ===================================================== -->
+    <!-- CHANNEL CONTRIBUTION -->
+    <!-- ===================================================== -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        Channel Contribution Analysis
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>Channel</th>
+
+                                    <th class="text-end">
+
+                                        Sales (KES)
+
+                                    </th>
+
+                                    <th class="text-end">
+
+                                        Contribution %
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for row in channel_breakdown %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ row.channel }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ "{:,.0f}".format(row.sales) }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ row.percentage }}%
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
 
                     </div>
 
@@ -212,31 +322,163 @@ Coast Insights™ | Executive Dashboard
         </div>
 
     </div>
-        <!-- ====================================================== -->
-    <!-- CUSTOMER ANALYTICS -->
-    <!-- ====================================================== -->
 
-    <div class="row">
+    <!-- ===================================================== -->
+    <!-- CUSTOMER & LOCATION ANALYTICS -->
+    <!-- ===================================================== -->
 
-        <!-- Top 10 Customers -->
+    <div class="row mt-4">
 
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-6">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-header bg-white">
 
                     <h5 class="mb-0">
+
                         Top 10 Customers
+
                     </h5>
 
                 </div>
 
                 <div class="card-body">
 
-                    <div style="height:350px;">
+                    <canvas id="topCustomersChart"
+                            height="180"></canvas>
 
-                        <canvas id="topCustomersChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        Sales by Location
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="locationChart"
+                            height="180"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ===================================================== -->
+    <!-- CUSTOMER PROFILING -->
+    <!-- ===================================================== -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        Customer Profiles
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Profile</th>
+
+                                <th class="text-end">
+
+                                    Customers
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>🟢 Platinum</td>
+
+                                <td class="text-end fw-bold">
+
+                                    {{ profile_summary.platinum }}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>🔵 Gold</td>
+
+                                <td class="text-end fw-bold">
+
+                                    {{ profile_summary.gold }}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>🟡 Silver</td>
+
+                                <td class="text-end fw-bold">
+
+                                    {{ profile_summary.silver }}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>⚪ Bronze</td>
+
+                                <td class="text-end fw-bold">
+
+                                    {{ profile_summary.bronze }}
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="alert alert-light mt-3 mb-0">
+
+                        Customer profiling is automatically
+                        calculated from the previous month's
+                        sales performance.
 
                     </div>
 
@@ -246,29 +488,218 @@ Coast Insights™ | Executive Dashboard
 
         </div>
 
-        <!-- Sales by Location -->
+        <!-- ================================================= -->
+        <!-- GROWTH TARGETS -->
+        <!-- ================================================= -->
 
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-8">
 
             <div class="card shadow-sm border-0 h-100">
 
                 <div class="card-header bg-white">
 
                     <h5 class="mb-0">
-                        Sales by Location
+
+                        Growth Targets (Top 10 Customers)
+
                     </h5>
 
                 </div>
 
                 <div class="card-body">
 
-    <div style="height:350px;">
+                    <div class="table-responsive">
 
-        <canvas id="locationChart"></canvas>
+                        <table class="table table-striped table-hover">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>Customer</th>
+
+                                    <th class="text-end">
+
+                                        Baseline
+
+                                    </th>
+
+                                    <th class="text-end">
+
+                                        Current
+
+                                    </th>
+
+                                    <th class="text-end">
+
+                                        Target
+
+                                    </th>
+
+                                    <th class="text-end">
+
+                                        %
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for row in growth_targets[:10] %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ row.customer }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ "{:,.0f}".format(row.baseline_sales) }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ "{:,.0f}".format(row.current_sales) }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ "{:,.0f}".format(row.target) }}
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        {{ row.achievement }}%
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
+    <!-- ===================================================== -->
+    <!-- PREDICTIVE INSIGHTS & AI -->
+    <!-- ===================================================== -->
 
-</div>
+    <div class="row mt-4">
+
+        <!-- Predictive Insights -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        🔮 Predictive Insights
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if predictive_insights %}
+
+                        <ul class="list-group list-group-flush">
+
+                            {% for insight in predictive_insights %}
+
+                            <li class="list-group-item">
+
+                                {{ insight }}
+
+                            </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <div class="alert alert-light mb-0">
+
+                            No predictive insights available.
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AI Recommendations -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        🤖 AI Assisted Recommendations
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if ai_recommendations %}
+
+                        <ul class="list-group list-group-flush">
+
+                            {% for recommendation in ai_recommendations %}
+
+                            <li class="list-group-item">
+
+                                {{ recommendation }}
+
+                            </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <div class="alert alert-light mb-0">
+
+                            No AI recommendations available.
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
@@ -276,263 +707,199 @@ Coast Insights™ | Executive Dashboard
 
     </div>
 
-    <!-- ====================================================== -->
+    <!-- ===================================================== -->
     <!-- EXECUTIVE INTELLIGENCE -->
-    <!-- ====================================================== -->
+    <!-- ===================================================== -->
 
-    <div class="card shadow-sm border-0">
+    <div class="row mt-4">
 
-        <div class="card-header bg-white">
+        <div class="col-12">
 
-            <h4 class="mb-0">
-                Executive Intelligence
-            </h4>
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-dark text-white">
+
+                    <h5 class="mb-0">
+
+                        Executive Intelligence Summary
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group list-group-flush">
+
+                        {% for item in executive.summary %}
+
+                        <li class="list-group-item">
+
+                            {{ item }}
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
 
         </div>
 
-       <!-- ====================================================== -->
-<!-- EXECUTIVE INTELLIGENCE -->
-<!-- ====================================================== -->
-
-<div class="card shadow-sm border-0">
-
-    <div class="card-header bg-white">
-
-        <h4 class="mb-0">
-            Executive Intelligence
-        </h4>
-
-    </div>
-
-    <div class="card-body">
-
-        <p class="text-muted">
-            Executive Summary
-        </p>
-
-        <ul class="mb-0">
-
-            {% for item in executive.summary %}
-
-                <li class="mb-2">
-                    {{ item }}
-                </li>
-
-            {% endfor %}
-
-        </ul>
-
-    </div>
-
-</div>
-
-{% endblock %}
-
-{% block scripts %}
-
-{{ super() }}
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </div>.
+<!-- ===================================================== -->
+<!-- CHART.JS -->
+<!-- ===================================================== -->
 
 <script>
 
-// ======================================================
-// DAILY SALES TREND
-// ======================================================
+const dailyCtx = document.getElementById("dailySalesChart");
 
-new Chart(document.getElementById("dailySalesChart"), {
+if (dailyCtx) {
 
-    type: "line",
+    new Chart(dailyCtx, {
 
-    data: {
+        type: "line",
 
-        labels: {{ chart_labels | tojson }},
+        data: {
 
-        datasets: [{
+            labels: {{ chart_labels|tojson }},
 
-            label: "Daily Sales (KES)",
+            datasets: [{
 
-            data: {{ chart_values | tojson }},
+                label: "Daily Sales",
 
-            tension: 0.3,
+                data: {{ chart_values|tojson }},
 
-            fill: false
+                borderWidth: 3,
 
-        }]
+                tension: 0.3,
 
-    },
+                fill: false
 
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        plugins: {
-
-            legend: {
-
-                position: "bottom"
-
-            }
-
-        }
-
-    }
-
-});
-
-
-// ======================================================
-// SALES BY CHANNEL
-// ======================================================
-
-new Chart(document.getElementById("channelChart"), {
-
-    type: "pie",
-
-    data: {
-
-        labels: {{ channel_labels | tojson }},
-
-        datasets: [{
-
-            data: {{ channel_values | tojson }}
-
-        }]
-
-    },
-
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        plugins: {
-
-            legend: {
-
-                position: "bottom"
-
-            }
-
-        }
-
-    }
-
-});
-
-
-// ======================================================
-// TOP 10 CUSTOMERS
-// ======================================================
-
-new Chart(document.getElementById("topCustomersChart"), {
-
-    type: "bar",
-
-    data: {
-
-        labels: {{ top_customer_labels | tojson }},
-
-        datasets: [{
-
-            label: "Sales (KES)",
-
-            data: {{ top_customer_values | tojson }},
-
-            borderWidth: 1
-
-        }]
-
-    },
-
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        indexAxis: "y",
-
-        plugins: {
-
-            legend: {
-
-                display: false
-
-            }
+            }]
 
         },
 
-        scales: {
+        options: {
 
-            x: {
+            responsive: true,
 
-                beginAtZero: true
-
-            }
+            maintainAspectRatio: false
 
         }
 
-    }
+    });
 
-});
-// ======================================================
-// SALES BY LOCATION
-// ======================================================
+}
 
-new Chart(document.getElementById("locationChart"), {
 
-    type: "bar",
+const channelCtx = document.getElementById("channelChart");
 
-    data: {
+if (channelCtx) {
 
-        labels: {{ location_labels | tojson }},
+    new Chart(channelCtx, {
 
-        datasets: [{
+        type: "pie",
 
-            label: "Sales (KES)",
+        data: {
 
-            data: {{ location_values | tojson }},
+            labels: {{ channel_labels|tojson }},
 
-            borderWidth: 1
+            datasets: [{
 
-        }]
+                data: {{ channel_values|tojson }}
 
-    },
-
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        plugins: {
-
-            legend: {
-
-                display: false
-
-            }
+            }]
 
         },
 
-        scales: {
+        options: {
 
-            y: {
+            responsive: true,
 
-                beginAtZero: true
-
-            }
+            maintainAspectRatio: false
 
         }
 
-    }
+    });
 
-});
+}
+
+
+const customerCtx = document.getElementById("topCustomersChart");
+
+if (customerCtx) {
+
+    new Chart(customerCtx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: {{ top_customer_labels|tojson }},
+
+            datasets: [{
+
+                label: "Sales",
+
+                data: {{ top_customer_values|tojson }}
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            indexAxis: "y"
+
+        }
+
+    });
+
+}
+
+
+const locationCtx = document.getElementById("locationChart");
+
+if (locationCtx) {
+
+    new Chart(locationCtx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: {{ location_labels|tojson }},
+
+            datasets: [{
+
+                label: "Sales",
+
+                data: {{ location_values|tojson }}
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+}
 
 </script>
-
-{% endblock %}
+{% endblock %}                      
